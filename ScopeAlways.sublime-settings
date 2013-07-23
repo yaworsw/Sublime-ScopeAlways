@@ -1,0 +1,8 @@
+{
+  // the key for the scope in the status bar.
+  // items in the status bar are set by keys and ordered by key in alphabetical order and comma separated
+  "status_key": "scope_always",
+
+  // a string used to format the status string. use %s in place of the scope
+  "status_format": "%s"
+}
