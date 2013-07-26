@@ -2,20 +2,36 @@ import sublime, sublime_plugin
 
 STATUS_FORMAT = '%s'
 
+on       = False
 settings = None
 
 def plugin_loaded():
   update_settings()
   settings.add_on_change('extensions_path', update_settings)
+  globals()['on'] = settings.get('start_on')
 
 def update_settings():
   globals()['settings'] = sublime.load_settings('ScopeAlways.sublime-settings')
 
+def show_scope(view, hide=False):
+  key = globals()['settings'].get('status_key', 'scope_always')
+  if not hide:
+    position = view.sel()[0].begin()
+    scope    = view.scope_name(position)
+    view.set_status(key, STATUS_FORMAT % scope)
+  else:
+    view.set_status(key, '')
+
 class ScopeAlways(sublime_plugin.EventListener):
 
   def on_selection_modified(self, view):
-    position = view.sel()[0].begin()
-    scope    = view.scope_name(position)
-    key      = globals()['settings'].get('status_key', 'scope_always')
-    view.set_status(key, STATUS_FORMAT % scope)
+    if on:
+      show_scope(view)
+    else:
+      show_scope(view, hide=True)
 
+class ToggleScopeAlways(sublime_plugin.WindowCommand):
+
+  def run(self):
+    on = globals()['on'] = not globals()['on']
+    show_scope(self.window.active_view(), hide=not on)

@@ -1,5 +1,8 @@
 {
   // the key for the scope in the status bar.
   // items in the status bar are set by keys and ordered by key in alphabetical order and comma separated
-  "status_key": "scope_always"
+  "status_key": "scope_always",
+
+  // if true then scope always will start on when you open sublime
+  "start_on": false
 }

@@ -1,0 +1,7 @@
+[
+  {
+    "caption": "Toggle ScopeAlways",
+    "command": "toggle_scope_always"
+  }
+
+]
