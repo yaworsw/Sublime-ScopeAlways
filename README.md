@@ -13,4 +13,4 @@ Then do I have the sublime text plugin for you!
 
 **ScopeAlways** adds a command `Toggle ScopeAlways` which you can use to display the scope of the current cursor in the status bar (see below).
 
-![what it does](img.png)
+![what it does](https://raw.github.com/yaworsw/Sublime-ScopeAlways/develop/img.png)
