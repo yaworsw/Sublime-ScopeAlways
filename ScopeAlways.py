@@ -17,7 +17,8 @@ def update_settings():
   """
   Updates the settings variable with the settings.
   """
-  globals()['settings'] = sublime.load_settings('ScopeAlways.sublime-settings')
+  global settings
+  settings = sublime.load_settings('ScopeAlways.sublime-settings')
 
 def show_scope(view, hide=False):
   """
