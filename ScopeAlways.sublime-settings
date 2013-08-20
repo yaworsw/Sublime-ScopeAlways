@@ -4,5 +4,8 @@
   "status_key": "scope_always",
 
   // if true then scope always will start on when you open sublime
-  "start_on": false
+  "start_on": false,
+
+  // a format string to be used to create the status
+  "status_format": "%s"
 }

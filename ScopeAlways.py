@@ -1,17 +1,18 @@
 import sublime, sublime_plugin
 
-STATUS_FORMAT = '%s'
+status_format = '%s'
+status_key    = 'scope_always'
+on            = False
 
-on       = False
-settings = None
+settings      = None
 
 def plugin_loaded():
   """
   When the plugin is loaded then load the plugin's settings.
   """
+  global settings
   update_settings()
   settings.add_on_change('extensions_path', update_settings)
-  on = settings.get('start_on')
 
 def update_settings():
   """
@@ -19,27 +20,42 @@ def update_settings():
   """
   global settings
   settings = sublime.load_settings('ScopeAlways.sublime-settings')
+  load_settings()
 
-def show_scope(view, hide=False):
+def load_setting(setting_key, var_name = None):
   """
-  Display the current scope in the status bar.
-  (or remove it if the plugin is currently off)
+  Load a setting defined by setting_key and put it into a global variable
+  defined by var_name.  If var_name is not given then the global variable is
+  assumed to share it's name with setting_key.
   """
-  key = settings.get('status_key', 'scope_always')
-  if not hide:
-    position = view.sel()[0].begin()
-    scope    = view.scope_name(position)
-    view.set_status(key, STATUS_FORMAT % scope)
-  else:
-    view.set_status(key, '')
+  if var_name == None:
+    var_name = setting_key
+  globals()[var_name] = settings.get(setting_key, globals()[var_name])
+
+def load_settings():
+  """
+  Load all of the settings associated with this package.
+  """
+  load_setting('status_format')
+  load_setting('status_key')
+  load_setting('start_on', 'on')
+
 
 class ScopeAlways(sublime_plugin.EventListener):
 
   def on_selection_modified(self, view):
     """
-    Triggered when the selector's position changes.
+    Displays the current scope if the plugin is on or clears it if its off.
     """
-    show_scope(view, hide=not on)
+    global on
+    global status_format
+    global status_key
+    if on:
+      position = view.sel()[0].begin()
+      scope    = view.scope_name(position)
+      view.set_status(status_key, status_format % scope)
+    else:
+      view.set_status(status_key, '')
 
 class ToggleScopeAlways(sublime_plugin.WindowCommand):
 
