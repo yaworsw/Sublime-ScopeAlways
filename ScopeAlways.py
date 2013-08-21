@@ -40,6 +40,16 @@ def load_settings():
   load_setting('status_key')
   load_setting('start_on', 'on')
 
+def show_scope(view):
+  global on
+  global status_format
+  global status_key
+  if on:
+    position = view.sel()[0].begin()
+    scope    = view.scope_name(position)
+    view.set_status(status_key, status_format % scope)
+  else:
+    view.set_status(status_key, '')
 
 class ScopeAlways(sublime_plugin.EventListener):
 
@@ -47,15 +57,7 @@ class ScopeAlways(sublime_plugin.EventListener):
     """
     Displays the current scope if the plugin is on or clears it if its off.
     """
-    global on
-    global status_format
-    global status_key
-    if on:
-      position = view.sel()[0].begin()
-      scope    = view.scope_name(position)
-      view.set_status(status_key, status_format % scope)
-    else:
-      view.set_status(status_key, '')
+    show_scope(view)
 
 class ToggleScopeAlways(sublime_plugin.WindowCommand):
 
@@ -65,4 +67,4 @@ class ToggleScopeAlways(sublime_plugin.WindowCommand):
     """
     global on
     on = not on
-    show_scope(self.window.active_view(), hide=not on)
+    show_scope(self.window.active_view())
