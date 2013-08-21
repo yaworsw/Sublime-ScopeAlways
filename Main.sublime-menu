@@ -18,7 +18,7 @@
               {
                 "caption": "Settings – Default",
                 "command": "open_file",
-                "args": { "file": "${packages}/ScopeAlways/ScopeAlways.sublime-settings" },
+                "args": { "file": "${packages}/ScopeAlways/ScopeAlways.sublime-settings" }
               },
               {
                 "caption": "Settings – User",
