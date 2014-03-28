@@ -1,12 +1,12 @@
 {
-	"folders":
-	[
-		{
-			"follow_symlinks": true,
-			"path": ".",
+  "folders":
+  [
+    {
+      "follow_symlinks": true,
+      "path": ".",
       "file_exclude_patterns": [
-        "*.png"
+
       ]
-		}
-	]
+    }
+  ]
 }
