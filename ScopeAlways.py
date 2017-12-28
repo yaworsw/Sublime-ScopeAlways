@@ -68,3 +68,13 @@ class ToggleScopeAlways(sublime_plugin.WindowCommand):
     global on
     on = not on
     show_scope(self.window.active_view())
+
+class CopyToClipboard(sublime_plugin.WindowCommand):
+
+  def run(self):
+    """
+    This command copies the current scope to the clipboard
+    """
+    current_scope = self.window.active_view().get_status(status_key)
+    if type(current_scope) is str:
+      sublime.set_clipboard(current_scope.rstrip())
