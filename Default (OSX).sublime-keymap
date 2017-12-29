@@ -1,0 +1,3 @@
+[
+    { "keys": ["super+shift+c"], "command": "copy_to_clipboard"}
+]
