@@ -44,7 +44,7 @@ def show_scope(view):
   global on
   global status_format
   global status_key
-  if on:
+  if on and len(view.sel()) > 0:
     position = view.sel()[0].begin()
     scope    = view.scope_name(position)
     view.set_status(status_key, status_format % scope)
