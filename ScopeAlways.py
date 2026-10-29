@@ -11,8 +11,10 @@ def plugin_loaded():
   When the plugin is loaded then load the plugin's settings.
   """
   global settings
+  global on
   update_settings()
-  settings.add_on_change('extensions_path', update_settings)
+  on = settings.get('start_on', on)
+  settings.add_on_change('ScopeAlways', on_settings_change)
 
 def update_settings():
   """
@@ -21,6 +23,15 @@ def update_settings():
   global settings
   settings = sublime.load_settings('ScopeAlways.sublime-settings')
   load_settings()
+
+def on_settings_change():
+  """
+  Reloads the settings and redraws the status when the settings file changes.
+  """
+  update_settings()
+  view = sublime.active_window().active_view()
+  if view is not None:
+    show_scope(view)
 
 def load_setting(setting_key, var_name = None):
   """
@@ -38,7 +49,6 @@ def load_settings():
   """
   load_setting('status_format')
   load_setting('status_key')
-  load_setting('start_on', 'on')
 
 def show_scope(view):
   global on
